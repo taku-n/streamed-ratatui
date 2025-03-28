@@ -38,7 +38,7 @@ impl App {
             terminal.draw(|frame| self.draw(frame))?;
 
             // Event handling phase
-            let event = reader.next().fuse();
+            let event = reader.next().fuse(); // Returns kinda like Future immediately
             tokio::select! {  // https://docs.rs/tokio/latest/tokio/macro.select.html#cancellation-safety
                 option_event = event => self.handle_crossterm_event(option_event).await?,
                 option_time = rx.recv() => self.handle_time_event(option_time).await?,
